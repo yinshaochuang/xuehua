@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .boxs{
+            width: 800px;
+            height:400px;
+            position: fixed;left: 0;top: 0;
+            right:0;
+            bottom:0;margin: auto;
+            border:1px solid red;
+            perspective: 5000px;
+            perspective-origin: bottom;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var boxs=document.querySelector(".boxs");
+            var heights=parseInt(getComputedStyle(boxs,null).height);
+            var widths=parseInt(getComputedStyle(boxs,null).width);
+            var nums=8;
+            var arr=[];
+            for(var i=0;i<nums;i++){
+                //创建场景
+                var scene=document.createElement("div");
+                scene.style.cssText="width:100%;height:"+heights/nums+"px;position:absolute;left:0;top:"+i*heights/nums+"px;";
+                //创建盒子
+                var box=document.createElement("div");
+                box.style.cssText="width:100%;height:100%;position:absolute;top:0;left:0;transform-style:preserve-3d;transition:transform 2s ease "+i*0.3+"s;transform-origin:center center 400px"
+                //创建面
+                for(var j=0;j<6;j++){
+                    var panel=document.createElement("div");
+                    if(j==0){
+                        panel.style.cssText="width:"+widths+"px;height:"+widths+"px;background:#000;transform-origin:top;transform:rotateX(90deg);position:absolute;left:0;top:"+heights/nums+"px;";
+                    }else if(j==1){
+                        panel.style.cssText="width:100%;height:100%;transform-origin:left;transform:rotateY(-90deg);position:absolute;left:0;top:0;";
+                        panel.style.background="url(img/houzi1.jpg) no-repeat 0 "+-i*heights/nums+"px";
+                        panel.style.backgroundSize="cover"
+
+                    }else if(j==2){
+                        panel.style.cssText="width:100%;height:100%;background:url(img/tiezui1.jpg) no-repeat 0 "+-i*heights/nums+"px ;position:absolute;left:0;top:0;transform:translateZ("+widths+"px)";
+                        panel.style.backgroundSize="cover "
+
+                    }else if(j==3){
+                        panel.style.cssText="width:100%;height:100%;transform-origin:right;transform:rotateY(90deg);background:url(img/lice.jpg) no-repeat 0 "+-heights/nums*i+"px;position:absolute;left:0;top:0;";
+                        panel.style.backgroundSize="cover"
+
+                    } else if(j==4){
+                        panel.style.cssText="width:"+widths+"px;height:"+widths+"px;top;background:#ccc;transform-origin:top;transform:rotateX(-90deg) translateY("+-widths+"px) ;position:absolute;left:0;top:0;";
+                    }else if(j==5){
+                        panel.style.cssText="width:100%;height:100%;transform:translateZ("+-heights+")px;background:url(img/houziandtiezui.jpg) no-repeat 0 "+-i*(heights/nums)+"px;position:absolute;left:0;top:0;";
+                        panel.style.backgroundSize="cover"
+                    }
+                    box.appendChild(panel)
+                }
+                arr.push(box);
+                scene.appendChild(box);
+                boxs.appendChild(scene);
+            }
+            var speed=0;
+            setInterval(function(){
+                speed+=90;
+                for(var i=0;i<arr.length;i++){
+                    arr[i].style.transform="rotateY("+speed+"deg)"
+                }
+            },5000)
+        }
+    </script>
+</head>
+<body>
+<div class="boxs">
+
+</div>
+</body>
+</html>
